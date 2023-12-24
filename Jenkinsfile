@@ -21,8 +21,8 @@ pipeline {
                 sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
                 //  Pushing Image to Repository
-                sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
-                sh 'docker push 20031501/pipeline-project:latest'
+                // sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
+                // sh 'docker push 20031501/pipeline-project:latest'
                 
                 echo "Image built and pushed to repository"
             }
