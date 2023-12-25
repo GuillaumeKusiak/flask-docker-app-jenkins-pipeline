@@ -16,19 +16,19 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    //  Building new image
-                    sh 'docker image build -t $DOCKER_HUB_REPO:latest .'
-                    sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
+                //  Building new image
+                sh 'docker image build -t $DOCKER_HUB_REPO:latest .'
+                sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
-                    //  Pushing Image to Repository
-                    docker.withRegistry('https://registry-1.docker.io/v2', '20031501'){
-                        sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
-                        sh 'docker push 20031501/pipeline-project:latest'
-                    }
+                sh 'docker login -u 20031501 --password-stdin'
+
+                //  Pushing Image to Repository
+                sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
+                sh 'docker push 20031501/pipeline-project:latest'
+                    
                 
                 echo "Image built and pushed to repository"
-                }
+                
             }
         }
         stage('Deploy') {
