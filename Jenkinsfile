@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_CREDENTIALS=credentials("20031501")
         DOCKER_HUB_REPO = "20031501/pipeline-project"
         CONTAINER_NAME = "flask-container"
         STUB_VALUE = "200"
@@ -19,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Connexion au registre DockerHub avec les informations d'identification de Jenkins
-                    withCredentials([usernamePassword(credentialsId: '20031501', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
                         sh "echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin"
                     }
                 }
