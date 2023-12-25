@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        DOCKER_HUB_CREDENTIALS=credentials("20031501")
         DOCKER_HUB_REPO = "20031501/pipeline-project"
         CONTAINER_NAME = "flask-container"
         STUB_VALUE = "200"
@@ -20,7 +21,7 @@ pipeline {
                 sh 'docker image build -t $DOCKER_HUB_REPO:latest .'
                 sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
-                sh 'docker login -u 20031501 --password-stdin'
+                sh '$DOCKER_HUB_CREDENTIALS'
 
                 //  Pushing Image to Repository
                 sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
