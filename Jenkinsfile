@@ -21,8 +21,10 @@ pipeline {
                 sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
                 //  Pushing Image to Repository
-                sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
-                sh 'docker push 20031501/pipeline-project:latest'
+                docker.withRegistry('https://registry-1.docker.io/v2', '20031501'){
+                    sh 'docker push 20031501/pipeline-project:$BUILD_NUMBER'
+                    sh 'docker push 20031501/pipeline-project:latest'
+                }
                 
                 echo "Image built and pushed to repository"
             }
